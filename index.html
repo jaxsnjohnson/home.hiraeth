@@ -13,6 +13,26 @@
       rel="stylesheet"
     />
 
+    <!-- Favicon Links (replace with your actual files) -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
+
     <!-- Embedded CSS -->
     <style>
       /* 
@@ -30,6 +50,7 @@
         --accent-color: #9a2d2d; /* D&D Red */
         --accent-hover: #b33a3a;
         --shadow-color: rgba(0, 0, 0, 0.1);
+        --card-text-color: #ffffff; /* Text on image cards */
 
         /* Typography */
         --font-title: "IM Fell English SC", serif;
@@ -50,6 +71,7 @@
         --accent-color: #c75454;
         --accent-hover: #e06c75;
         --shadow-color: rgba(0, 0, 0, 0.4);
+        --card-text-color: #f0f0f0;
       }
 
       /* 
@@ -96,10 +118,6 @@
         transition: var(--theme-transition);
       }
 
-      p {
-        margin-bottom: 1rem;
-      }
-
       a {
         color: var(--accent-color);
         text-decoration: none;
@@ -133,7 +151,6 @@
       .site-title {
         flex-grow: 1;
         text-align: center;
-        /* Allow title to wrap under toggle on very small screens */
         margin-bottom: 1rem;
       }
 
@@ -174,7 +191,6 @@
         transform: scale(1.1);
       }
 
-      /* Hide one icon based on the theme */
       html[data-theme="dark"] .theme-toggle .sun-icon {
         display: block;
       }
@@ -187,7 +203,7 @@
 
       /* 
       ========================================
-      5. Card Grid for Key Sites
+      5. Card Grid for Key Sites (with Images)
       ========================================
       */
       .card-grid {
@@ -198,25 +214,69 @@
       }
 
       .card {
-        background-color: var(--card-bg);
-        border: 1px solid var(--card-border);
+        /* Image and Layout */
+        background-size: 115%; /* Slightly zoomed for parallax */
+        background-position: center;
         border-radius: 8px;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        overflow: hidden; /* Important for parallax and border-radius */
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 180px;
         padding: 1.5rem;
         text-align: center;
-        box-shadow: 0 4px 8px var(--shadow-color);
-        transition: transform 0.2s ease, box-shadow 0.2s ease,
-          var(--theme-transition);
+
+        /* Text Styling */
+        color: var(--card-text-color);
+        text-decoration: none;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+
+        /* Transitions */
+        transition: transform 0.3s ease, box-shadow 0.3s ease,
+          background-position 0.4s ease;
+      }
+
+      /* Dark overlay for text readability */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0; /* Covers the entire card */
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.3) 100%
+        );
+        transition: background 0.3s ease;
       }
 
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px var(--shadow-color);
-        border-color: var(--accent-color);
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px var(--shadow-color);
+        background-position: center 40%; /* Parallax effect */
+        text-decoration: none;
+      }
+
+      .card:hover::before {
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+
+      /* Ensure text is above the overlay */
+      .card h3,
+      .card p {
+        position: relative;
+        z-index: 1;
       }
 
       .card h3 {
         font-family: var(--font-header);
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         margin-bottom: 0.5rem;
       }
 
@@ -267,25 +327,20 @@
         .container {
           padding: 1rem;
         }
-
         header {
           flex-direction: column;
           position: relative;
           padding-bottom: 0;
         }
-
         .site-title {
           margin-bottom: 1rem;
         }
-
         .theme-toggle {
-          /* Keep it in the corner */
           top: 15px;
           right: 15px;
         }
-
         h1 {
-          margin-top: 3rem; /* Space for the toggle button */
+          margin-top: 3rem;
         }
       }
     </style>
@@ -304,23 +359,44 @@
         <section id="key-sites">
           <h2>Key Archives</h2>
           <div class="card-grid">
-            <a href="#" class="card">
+            <!-- IMPORTANT: Replace 'images/...' with your actual image paths -->
+            <a
+              href="#"
+              class="card"
+              style="background-image: url('assets/images/fvtt-1920x1080.jpg')"
+            >
               <h3>Foundry VTT</h3>
               <p>Launch the virtual table top for our games.</p>
             </a>
-            <a href="#" class="card">
+            <a
+              href="#"
+              class="card"
+              style="background-image: url('assets/images/maps-1920x1080.jpg')"
+            >
               <h3>Interactive Maps</h3>
               <p>Explore the world of Hiraeth.</p>
             </a>
-            <a href="#" class="card">
+            <a
+              href="#"
+              class="card"
+              style="background-image: url('assets/images/minis-1920x1080.jpg')"
+            >
               <h3>Miniatures Library</h3>
               <p>Browse the collection of digital minis.</p>
             </a>
-            <a href="#" class="card">
+            <a
+              href="#"
+              class="card"
+              style="background-image: url('assets/images/stats-1920x1080.jpg')"
+            >
               <h3>Stat Block Maker</h3>
               <p>Create monsters with URL-saved data.</p>
             </a>
-            <a href="#" class="card">
+            <a
+              href="#"
+              class="card"
+              style="background-image: url('assets/images/wiki-1920x1080.jpg')"
+            >
               <h3>The Wiki</h3>
               <p>The main source for all Hiraeth lore.</p>
             </a>
@@ -344,18 +420,15 @@
 
     <!-- Embedded JavaScript -->
     <script>
-      // Wait for the DOM to be fully loaded before running the script
       document.addEventListener("DOMContentLoaded", () => {
         const themeToggle = document.getElementById("theme-toggle");
         const htmlElement = document.documentElement;
 
-        // Function to apply the theme
         const applyTheme = (theme) => {
           htmlElement.setAttribute("data-theme", theme);
           localStorage.setItem("theme", theme);
         };
 
-        // Function to handle the toggle click
         const toggleTheme = () => {
           const currentTheme =
             htmlElement.getAttribute("data-theme") || "light";
@@ -363,16 +436,12 @@
           applyTheme(newTheme);
         };
 
-        // Add click event listener to the button
         themeToggle.addEventListener("click", toggleTheme);
 
-        // --- Initial Theme Detection ---
-        // 1. Check for a saved theme in localStorage
         const savedTheme = localStorage.getItem("theme");
         if (savedTheme) {
           applyTheme(savedTheme);
         } else {
-          // 2. If no saved theme, check for the user's OS preference
           const prefersDark = window.matchMedia(
             "(prefers-color-scheme: dark)"
           ).matches;
