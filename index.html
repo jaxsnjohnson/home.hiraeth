@@ -1,533 +1,384 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="auto">
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>Hiraeth — Setting Hub</title>
-    <meta
-      name="description"
-      content="Homepage hub for the Hiraeth setting: wiki, maps, and resources."
-    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HAG - Hiraeth Archives & Guides</title>
 
-    <!-- Fonts -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=EB+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
+    <!-- Embedded CSS -->
     <style>
+      /* 
+      ========================================
+      1. CSS Variables & Theme Setup
+      ========================================
+      */
       :root {
-        /* Colors (can map to Hiraeth tokens later) */
-        --bg: #ffffff;
-        --surface: #f7f7f7;
-        --text: #0b0d10;
-        --muted: #5c6570;
-        --link: #0b5fff;
-        --link-hover: #0846c9;
-        --border: #e1e4e8;
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06),
-          0 8px 24px rgba(0, 0, 0, 0.06);
+        /* Light Theme Colors */
+        --bg-color: #fdfaf6; /* Parchment */
+        --text-color: #1a1a1a; /* Dark Charcoal */
+        --header-text-color: #111;
+        --card-bg: #ffffff;
+        --card-border: #e0e0e0;
+        --accent-color: #9a2d2d; /* D&D Red */
+        --accent-hover: #b33a3a;
+        --shadow-color: rgba(0, 0, 0, 0.1);
 
-        --accent: #0b5fff;
-        --radius: 4px; /* crisp, not bubbly */
-        --maxw: 980px;
+        /* Typography */
+        --font-title: "IM Fell English SC", serif;
+        --font-header: "EB Garamond", serif;
+        --font-body: "Source Sans 3", sans-serif;
 
-        --heroHeight: 140px;
-
-        /* Fonts from your spec */
-        --font-heading: "IM Fell English SC", serif;
-        --font-doc-heading: "EB Garamond", Georgia, Cambria,
-          "Times New Roman", Times, serif;
-        --font-body: -apple-system, BlinkMacSystemFont, "Source Sans 3",
-          Segoe UI, Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol";
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0e0f11;
-          --surface: #141618;
-          --text: #e7eaee;
-          --muted: #a7b0ba;
-          --link: #8cb6ff;
-          --link-hover: #b9d1ff;
-          --border: #2a2e33;
-          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
-            0 8px 24px rgba(0, 0, 0, 0.35);
-        }
-      }
-
-      /* Manual override via [data-theme] */
-      html[data-theme="light"] {
-        --bg: #ffffff;
-        --surface: #f7f7f7;
-        --text: #0b0d10;
-        --muted: #5c6570;
-        --link: #0b5fff;
-        --link-hover: #0846c9;
-        --border: #e1e4e8;
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06),
-          0 8px 24px rgba(0, 0, 0, 0.06);
+        /* Transitions */
+        --theme-transition: color 0.3s ease, background-color 0.3s ease;
       }
 
       html[data-theme="dark"] {
-        --bg: #0e0f11;
-        --surface: #141618;
-        --text: #e7eaee;
-        --muted: #a7b0ba;
-        --link: #8cb6ff;
-        --link-hover: #b9d1ff;
-        --border: #2a2e33;
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
-          0 8px 24px rgba(0, 0, 0, 0.35);
+        /* Dark Theme Colors */
+        --bg-color: #1e1e1e;
+        --text-color: #e0e0e0;
+        --header-text-color: #f0f0f0;
+        --card-bg: #2a2a2a;
+        --card-border: #444;
+        --accent-color: #c75454;
+        --accent-hover: #e06c75;
+        --shadow-color: rgba(0, 0, 0, 0.4);
       }
 
-      * {
+      /* 
+      ========================================
+      2. General Body & Typography Styles
+      ========================================
+      */
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
-      }
-
-      html,
-      body {
         margin: 0;
         padding: 0;
-        background: var(--bg);
-        color: var(--text);
+      }
+
+      body {
         font-family: var(--font-body);
-        line-height: 1.55;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        transition: var(--theme-transition);
       }
 
-      a {
-        color: var(--link);
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: var(--link-hover);
-        text-decoration: underline;
-      }
-
-      .wrap {
-        max-width: var(--maxw);
-        margin: 0 auto;
-        padding: 24px 16px 56px;
-      }
-
-      header {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .brand {
-        display: flex;
-        align-items: baseline;
-        gap: 12px;
-        flex-wrap: wrap;
+      h1,
+      h2 {
+        line-height: 1.2;
+        margin-bottom: 1rem;
       }
 
       h1 {
-        margin: 0;
-        font-family: var(--font-heading);
-        font-weight: 400; /* IM Fell English SC is small caps display */
-        font-size: 44px;
-        letter-spacing: 0.2px;
-      }
-
-      .subtitle {
-        margin: 0;
-        color: var(--muted);
-        font-weight: 600;
-      }
-
-      .theme-toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-        padding: 8px 10px;
-        border: 1px solid var(--border);
-        background: var(--surface);
-        color: var(--text);
-        cursor: pointer;
-        border-radius: var(--radius);
-      }
-
-      main h2,
-      main h3 {
-        font-family: var(--font-doc-heading);
-        font-weight: 600;
-        margin: 0;
-        letter-spacing: 0.1px;
-      }
-
-      /* Hero cards */
-      .hero {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-        margin: 20px 0 28px;
-      }
-
-      @media (min-width: 640px) {
-        .hero {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      .card {
-        position: relative;
-        border: 1px solid var(--border);
-        background: var(--surface);
-        height: var(--heroHeight);
-        overflow: hidden;
-        border-radius: calc(var(--radius) - 1px);
-        box-shadow: var(--shadow);
-        transition: transform 120ms ease, border-color 120ms ease,
-          box-shadow 120ms ease;
-      }
-
-      .card:hover,
-      .card:focus-within {
-        transform: translateY(-1px);
-        border-color: color-mix(in oklab, var(--border), var(--text) 25%);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08),
-          0 12px 28px rgba(0, 0, 0, 0.12);
-      }
-
-      .card a {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        grid-template-columns: 1fr;
-        align-items: end;
-        padding: 14px 16px;
-        color: inherit;
-        text-decoration: none;
-        z-index: 2;
-      }
-
-      .card h3 {
-        margin: 0 0 2px 0;
-        font-size: 22px;
-      }
-
-      .card p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .card .bg {
-        position: absolute;
-        inset: 0;
-        background-position: center;
-        background-size: cover;
-        filter: grayscale(40%) contrast(1.05) saturate(0.9);
-        opacity: 0.9;
-      }
-
-      .card .tint {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.45),
-          rgba(0, 0, 0, 0.05)
-        );
-        mix-blend-mode: multiply;
-      }
-
-      @media (prefers-color-scheme: light) {
-        .card .tint {
-          background: linear-gradient(
-            to top,
-            rgba(255, 255, 255, 0.5),
-            rgba(255, 255, 255, 0.1)
-          );
-          mix-blend-mode: screen;
-        }
-      }
-      html[data-theme="light"] .card .tint {
-        background: linear-gradient(
-          to top,
-          rgba(255, 255, 255, 0.5),
-          rgba(255, 255, 255, 0.1)
-        );
-        mix-blend-mode: screen;
-      }
-      html[data-theme="dark"] .card .tint {
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.45),
-          rgba(0, 0, 0, 0.05)
-        );
-        mix-blend-mode: multiply;
-      }
-
-      /* Other Links */
-      .section {
-        border: 1px solid var(--border);
-        background: var(--surface);
-        border-radius: var(--radius);
-      }
-
-      .section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 12px 14px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .section-title {
-        margin: 0;
-        font-size: 18px;
-        font-family: var(--font-doc-heading);
-        font-weight: 600;
-      }
-
-      .links {
-        list-style: none;
-        margin: 0;
-        padding: 8px;
-        display: grid;
-        gap: 6px;
-      }
-
-      .link-item a {
-        display: grid;
-        grid-template-columns: 22px 1fr auto;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: calc(var(--radius) - 1px);
-        border: 1px solid var(--border);
-        background: color-mix(in oklab, var(--surface), transparent 20%);
-        transition: background 120ms ease, border-color 120ms ease,
-          transform 120ms ease;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .link-item a:hover,
-      .link-item a:focus-visible {
-        background: color-mix(in oklab, var(--surface), transparent 10%);
-        border-color: color-mix(in oklab, var(--border), var(--text) 18%);
-        transform: translateY(-1px);
-      }
-
-      .icon {
-        width: 22px;
-        height: 22px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-      }
-
-      .link-note {
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      footer {
-        margin-top: 32px;
-        color: var(--muted);
-        font-size: 13px;
+        font-family: var(--font-title);
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        color: var(--header-text-color);
         text-align: center;
       }
 
-      /* Utility */
-      .sr-only {
+      h2 {
+        font-family: var(--font-header);
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        color: var(--accent-color);
+        border-bottom: 2px solid var(--card-border);
+        padding-bottom: 0.5rem;
+        margin-top: 2rem;
+        transition: var(--theme-transition);
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        color: var(--accent-hover);
+      }
+
+      /* 
+      ========================================
+      3. Layout & Main Components
+      ========================================
+      */
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        flex-wrap: wrap;
+      }
+
+      .site-title {
+        flex-grow: 1;
+        text-align: center;
+        /* Allow title to wrap under toggle on very small screens */
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+      }
+
+      /* 
+      ========================================
+      4. Theme Toggle Button
+      ========================================
+      */
+      .theme-toggle {
+        background: none;
+        border: 2px solid var(--card-border);
+        color: var(--text-color);
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: var(--theme-transition), transform 0.2s ease;
         position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 1px, 1px);
-        white-space: nowrap;
-        border: 0;
+        top: 20px;
+        right: 20px;
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--card-bg);
+        transform: scale(1.1);
+      }
+
+      /* Hide one icon based on the theme */
+      html[data-theme="dark"] .theme-toggle .sun-icon {
+        display: block;
+      }
+      html[data-theme="dark"] .theme-toggle .moon-icon {
+        display: none;
+      }
+      .theme-toggle .sun-icon {
+        display: none;
+      }
+
+      /* 
+      ========================================
+      5. Card Grid for Key Sites
+      ========================================
+      */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 8px var(--shadow-color);
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          var(--theme-transition);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px var(--shadow-color);
+        border-color: var(--accent-color);
+      }
+
+      .card h3 {
+        font-family: var(--font-header);
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .card p {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+      }
+
+      /* 
+      ========================================
+      6. Useful Links Section
+      ========================================
+      */
+      .useful-links ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .useful-links li {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 5px;
+        margin-bottom: 0.75rem;
+        transition: var(--theme-transition);
+      }
+
+      .useful-links a {
+        display: block;
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+        font-family: var(--font-body);
+      }
+
+      .useful-links a:hover {
+        background-color: var(--accent-color);
+        color: var(--bg-color);
+        text-decoration: none;
+        border-radius: 4px;
+      }
+
+      /* 
+      ========================================
+      7. Responsive Adjustments
+      ========================================
+      */
+      @media (max-width: 600px) {
+        .container {
+          padding: 1rem;
+        }
+
+        header {
+          flex-direction: column;
+          position: relative;
+          padding-bottom: 0;
+        }
+
+        .site-title {
+          margin-bottom: 1rem;
+        }
+
+        .theme-toggle {
+          /* Keep it in the corner */
+          top: 15px;
+          right: 15px;
+        }
+
+        h1 {
+          margin-top: 3rem; /* Space for the toggle button */
+        }
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
+    <div class="container">
       <header>
-        <div class="brand">
-          <h1>Hiraeth</h1>
-          <p class="subtitle">Setting Hub</p>
-        </div>
-
-        <button
-          id="themeBtn"
-          class="theme-toggle"
-          aria-label="Toggle light/dark theme"
-          title="Toggle theme"
-        >
-          <span aria-hidden="true">🌓</span>
-          <span>Theme</span>
+        <h1 class="site-title">Hiraeth Archives & Guides</h1>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
         </button>
       </header>
 
       <main>
-        <!-- Optional blurb; fill later -->
-        <section aria-label="Intro" style="margin-top: 16px">
-          <p id="blurb" style="margin: 0; color: var(--muted)">
-            A world of memory and longing. Replace this with a sentence or two
-            about Hiraeth when ready.
-          </p>
-        </section>
-
-        <!-- Two main links -->
-        <section class="hero" aria-label="Primary Links">
-          <article class="card">
-            <div
-              class="bg"
-              style="
-                background-image: url('https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1200&auto=format&fit=crop');
-              "
-              aria-hidden="true"
-            ></div>
-            <div class="tint" aria-hidden="true"></div>
-            <a href="#wiki">
-              <h3>Wiki</h3>
-              <p>Lore, timelines, peoples, places, and sessions.</p>
+        <section id="key-sites">
+          <h2>Key Archives</h2>
+          <div class="card-grid">
+            <a href="#" class="card">
+              <h3>Foundry VTT</h3>
+              <p>Launch the virtual table top for our games.</p>
             </a>
-          </article>
-
-          <article class="card">
-            <div
-              class="bg"
-              style="
-                background-image: url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?q=80&w=1200&auto=format&fit=crop');
-              "
-              aria-hidden="true"
-            ></div>
-            <div class="tint" aria-hidden="true"></div>
-            <a href="#maps">
-              <h3>Maps</h3>
-              <p>World, regions, routes, and battlemaps.</p>
+            <a href="#" class="card">
+              <h3>Interactive Maps</h3>
+              <p>Explore the world of Hiraeth.</p>
             </a>
-          </article>
-        </section>
-
-        <!-- Other Links -->
-        <section class="section" aria-labelledby="other-links-title">
-          <div class="section-header">
-            <h2 id="other-links-title" class="section-title">Other Links</h2>
+            <a href="#" class="card">
+              <h3>Miniatures Library</h3>
+              <p>Browse the collection of digital minis.</p>
+            </a>
+            <a href="#" class="card">
+              <h3>Stat Block Maker</h3>
+              <p>Create monsters with URL-saved data.</p>
+            </a>
+            <a href="#" class="card">
+              <h3>The Wiki</h3>
+              <p>The main source for all Hiraeth lore.</p>
+            </a>
           </div>
+        </section>
 
-          <ul class="links">
-            <li class="link-item">
-              <a href="#how-to-make-pc">
-                <span class="icon" aria-hidden="true">🧙</span>
-                <span>How to make a PC</span>
-                <span class="link-note">Guide</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#videos">
-                <span class="icon" aria-hidden="true">🎞️</span>
-                <span>Cool D&amp;D Videos Playlist</span>
-                <span class="link-note">YouTube</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#house-rules">
-                <span class="icon" aria-hidden="true">📜</span>
-                <span>House Rules &amp; Tools</span>
-                <span class="link-note">Reference</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#character-sheet">
-                <span class="icon" aria-hidden="true">🧾</span>
-                <span>Blank Character Sheet</span>
-                <span class="link-note">PDF</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#initiative">
-                <span class="icon" aria-hidden="true">⚔️</span>
-                <span>Initiative Tracker</span>
-                <span class="link-note">Tool</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#loot-log">
-                <span class="icon" aria-hidden="true">💰</span>
-                <span>Party Loot Log</span>
-                <span class="link-note">Sheet</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#homebrew">
-                <span class="icon" aria-hidden="true">🧩</span>
-                <span>Homebrew Compendium</span>
-                <span class="link-note">Archive</span>
-              </a>
-            </li>
-            <li class="link-item">
-              <a href="#session-calendar">
-                <span class="icon" aria-hidden="true">📅</span>
-                <span>Session Calendar</span>
-                <span class="link-note">Schedule</span>
-              </a>
-            </li>
+        <section id="useful-links" class="useful-links">
+          <h2>Adventurer's Tools</h2>
+          <ul>
+            <li><a href="#">Character Sheet Template</a></li>
+            <li><a href="#">Useful Videos for New Players</a></li>
+            <li><a href="#">Guide: How to Create a Character</a></li>
           </ul>
         </section>
-
-        <footer>
-          © <span id="year"></span> Hiraeth. All rights reserved.
-        </footer>
       </main>
+
+      <footer>
+        <p>&copy; 2025 Hiraeth Archives. For adventure!</p>
+      </footer>
     </div>
 
+    <!-- Embedded JavaScript -->
     <script>
-      ;(() => {
-        const root = document.documentElement
-        const btn = document.getElementById('themeBtn')
-        const key = 'hiraeth-theme'
+      // Wait for the DOM to be fully loaded before running the script
+      document.addEventListener("DOMContentLoaded", () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        const htmlElement = document.documentElement;
 
-        function apply(theme) {
-          if (theme === 'auto') {
-            root.setAttribute('data-theme', 'auto')
-          } else {
-            root.setAttribute('data-theme', theme)
-          }
+        // Function to apply the theme
+        const applyTheme = (theme) => {
+          htmlElement.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+        };
+
+        // Function to handle the toggle click
+        const toggleTheme = () => {
+          const currentTheme =
+            htmlElement.getAttribute("data-theme") || "light";
+          const newTheme = currentTheme === "light" ? "dark" : "light";
+          applyTheme(newTheme);
+        };
+
+        // Add click event listener to the button
+        themeToggle.addEventListener("click", toggleTheme);
+
+        // --- Initial Theme Detection ---
+        // 1. Check for a saved theme in localStorage
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          applyTheme(savedTheme);
+        } else {
+          // 2. If no saved theme, check for the user's OS preference
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          applyTheme(prefersDark ? "dark" : "light");
         }
-
-        function nextTheme(current) {
-          if (current === 'auto') return 'light'
-          if (current === 'light') return 'dark'
-          return 'auto'
-        }
-
-        function init() {
-          const saved = localStorage.getItem(key) || 'auto'
-          apply(saved)
-          btn.setAttribute('data-theme', saved)
-        }
-
-        btn.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme') || 'auto'
-          const t = nextTheme(current)
-          apply(t)
-          localStorage.setItem(key, t)
-        })
-
-        document.getElementById('year').textContent =
-          new Date().getFullYear().toString()
-
-        init()
-      })()
+      });
     </script>
   </body>
 </html>
